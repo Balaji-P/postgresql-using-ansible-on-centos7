@@ -37,7 +37,12 @@
         - ansible_distribution_version.split('.')[0] == '6'
 
   roles:
-    - role: geerlingguy.postgresql
+    - role: ansible-role-postgresql
+      prometheus_postgres_dbname: prometheus
+      prometheus_postgres_port: 9187
+      prometheus_postgres_query_filenames:
+        - queries-default.yml
+        - queries-pg_statio_user_tables.yml
 
   post_tasks:
     - name: Verify postgres is running.

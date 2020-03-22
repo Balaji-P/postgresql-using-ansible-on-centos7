@@ -65,3 +65,19 @@ postgresql_users: []
 
 # Whether to output user data when managing users.
 postgres_users_no_log: true
+
+
+prometheus_postgres_version: 0.4.6
+prometheus_postgres_sha256: >-
+  9ed457c9a6d3a1e0132b3fe10f1d072457a667b009993a73e90b47ca99cc5bca
+
+prometheus_postgres_dbname: postgres
+prometheus_postgres_data_source_name: "user=postgres dbname=\
+  {{ prometheus_postgres_dbname }} host=/var/run/postgresql/ sslmode=disable"
+
+prometheus_postgres_port: 9187
+
+prometheus_postgres_query_filenames:
+  - queries-default.yml
+
+prometheus_postgres_query_directory: files/
