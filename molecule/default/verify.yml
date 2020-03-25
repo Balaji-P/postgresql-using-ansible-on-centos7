@@ -1,0 +1,25 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Populate service facts
+      service_facts:
+
+    - name: Check if prometheus exporter starts at boot
+      fail:
+        msg: "prometheus exporter service doesn't exist"
+      when: "'prometheus-postgres-exporter.service' not in services"
+
+    - name: Check if prometheus exporter is enabled
+      fail:
+        msg: "prometheus exporter service is not enabled"
+      when: "ansible_facts.services['prometheus-postgres-exporter.service'].status != 'enabled'"
+
+    - name: Check if prometheus exporter is running
+      fail:
+        msg: "prometheus exporter service is not running"
+      when: "ansible_facts.services['prometheus-postgres-exporter.service'].state != 'running'"
+
+    - name: Check metrics url.
+      uri:
+        url: "http://127.0.0.1:9187/metrics"
